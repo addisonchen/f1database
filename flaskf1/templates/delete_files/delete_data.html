@@ -1,0 +1,33 @@
+{% extends "data_layout.html" %}
+{% block title %}
+  <h3>Delete Data</h3>
+{% endblock title %}
+
+
+{% block form %}
+  <div class="form-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">
+          {% block legend %} {% endblock legend %}
+        </legend>
+        <div class="form-group">
+          <label>{{ form.options.label() }}</label>
+          {{ form.options(class="form-control") }}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {% if form.options.choices|length == 0 %}
+          {{ form.submit(class="btn btn-outline-info disabled") }}
+          <small class="form-text text-muted">
+            There are no options to delete
+          </small>
+        {% else %}
+          {{ form.submit(class="btn btn-outline-info") }}
+        {% endif %}
+      </div>
+    </form>
+
+  </div>
+{% endblock form%}

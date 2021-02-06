@@ -1,0 +1,31 @@
+{% extends "delete_files/delete_data.html" %}
+
+{% block links %}
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('delete_season_page') }}">Season</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('delete_race_page') }}">Race</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('delete_result_page') }}">Result</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('delete_team_page') }}">Team</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="{{ url_for('delete_driver_page') }}">Driver</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('delete_principal_page') }}">Principal</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('delete_twitter_page') }}">Twitter</a>
+  </li>
+
+{% endblock links %}
+
+{% block legend %}
+  Delete a driver
+{% endblock legend %}

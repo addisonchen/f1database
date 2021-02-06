@@ -1,0 +1,98 @@
+{% extends "table_layout.html" %}
+{% block nav %}
+  {% for row in tuples %}
+    <a class="nav-link" href="{{ url_for('teams_info_page', team=row['pk'] ) }}">{{ row['name'] }}</a>
+  {% endfor %}
+{% endblock nav %}
+
+
+{% block subcontent %}
+  <div class="table-heading">{{ current['team_name'] }}</div>
+  <div class="row table-description">
+    <div class="col-sm-6 table-description-left" style="border-color: #{{ current['hex_color'] }}">
+      Total points:  <span style="color: #{{ current['hex_color'] }}">{{ current['total_score'] }}</span><br>
+      Average race points: <span style="color: #{{ current['hex_color'] }}">{{ current['avg_score'] }}</span><br>
+      Wins: <span style="color: #{{ current['hex_color'] }}">{{ current['wins'] }}</span>
+      | Podiums: <span style="color: #{{ current['hex_color'] }}">{{ current['podiums'] }}</span>
+
+    </div>
+    <div class="col-sm-6 table-description-right" style="border-color: #{{ current['hex_color'] }}">
+      Username: <span style="color: #{{ current['hex_color'] }}">@{{ current['username'] }}</span><br>
+      Followers: <span style="color: #{{ current['hex_color'] }}">{{ current['followers'] }}</span><br>
+      Average likes: <span style="color: #{{ current['hex_color'] }}">{{ current['avg_likes'] }}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <canvas id="driver-points-pie" width="600" height="600" onload="dpp()"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="twitter-compare-avg" width="600" height="600"></canvas>
+    </div>
+  </div>
+
+
+{% endblock subcontent %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      var tcaID = document.getElementById("twitter-compare-avg").getContext("2d");
+      var tca = JSON.parse('{{ tcadata|tojson }}');
+      
+      new Chart(tcaID, {
+        type: 'bar',
+        data: {
+          labels: tca['labels'],
+          datasets: tca['datasets']
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Twitter Stat Comparison',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+
+      var dppID = document.getElementById("driver-points-pie").getContext("2d");
+      var dpp = JSON.parse('{{ dppdata|tojson }}');
+      new Chart(dppID, {
+        type: 'doughnut',
+        data: {
+          labels: dpp['labels'],
+          datasets: [{
+            label: "Points",
+            backgroundColor: dpp['colors'],
+            data: dpp['data']
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Points By Team Drivers',
+            fontSize: 20,
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+    })
+
+  </script>
+{% endblock scripts %}

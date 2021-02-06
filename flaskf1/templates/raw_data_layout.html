@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container-fluid" style="display: flex;">
+    <div class="row" id="table_main_row">
+      <div class="col-3" id="left-nav" style="display: flex;">
+        <nav class="nav flex-column" id="left_tbl_lay_nav">
+          
+          <a class="nav-link" href="{{ url_for('season_raw_data_page') }}">Season</a>
+          <a class="nav-link" href="{{ url_for('race_raw_data_page') }}">Race</a>
+          <a class="nav-link" href="{{ url_for('result_raw_data_page') }}">Result</a>
+          <a class="nav-link" href="{{ url_for('team_raw_data_page') }}">Team</a>
+          <a class="nav-link" href="{{ url_for('driver_raw_data_page') }}">Driver</a>
+          <a class="nav-link" href="{{ url_for('principal_raw_data_page') }}">Principal</a>
+          <a class="nav-link" href="{{ url_for('twitter_raw_data_page') }}">Twitter</a>
+          
+        </nav>
+      </div>
+      <div class="col-9"  id="right-panel">
+        <div class="raw-header-container">
+          <h3>{{ title }}</h3>
+        </div>
+        <div class="raw-table-container">
+          <table class="raw-table">
+            <tr class="header-row">
+              {% for item in headers %}
+                <th class="header-cell">
+                  {{ item }}
+                </th>
+              {% endfor %}
+            </tr>
+            {% for row in tuples %}
+              <tr class="body-row">
+                {% for key in headers %}
+                  <td class="body-cell">
+                    {{ row[key] }}
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div class="double-spacer"></div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

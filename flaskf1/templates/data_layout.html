@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <div class="spacer">
+    <div class="title-container">
+      {% block title %} {% endblock title %}
+    </div>
+  </div>
+  <ul class="nav nav-tabs justify-content-center">
+    {% block links %} {% endblock links %}
+  </ul>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category == 'info' or 'warning' %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% block form %} {% endblock form %}
+  
+  <div class="double-spacer"></div>
+{% endblock content %}

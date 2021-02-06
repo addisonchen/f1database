@@ -1,0 +1,205 @@
+{% extends "table_layout.html" %}
+{% block nav %}
+  {% for row in tuples %}
+    <a class="nav-link" href="{{ url_for('drivers_info_page', driver=row['pk'] ) }}">{{ row['name'] }}</a>
+  {% endfor %}
+{% endblock nav %}
+
+{% block subcontent %}
+  <div class="table-heading">Drivers</div>
+
+  <canvas id="drivertpsl" width="600" height="600"></canvas>
+
+  <div class="half-spacer"></div>
+
+  <canvas id="drivertps" width="600" height="350"></canvas>
+
+  <div class="half-spacer"></div>
+
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <canvas id="driverfs" width="300" height="300"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="driverls" width="300" height="300"></canvas>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+
+{% endblock subcontent %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      var dpsID = document.getElementById("drivertps").getContext("2d");
+      var dps = JSON.parse('{{ dpsdata|tojson }}');
+
+      var dpslID = document.getElementById("drivertpsl").getContext("2d");
+      var dpsl = JSON.parse('{{ dpsldata|tojson }}');
+
+      var dfsID = document.getElementById("driverfs").getContext("2d");
+      var dfs = JSON.parse('{{ dfsdata|tojson }}');
+
+      var dlsID = document.getElementById("driverls").getContext("2d");
+      var dls = JSON.parse('{{ dlsdata|tojson }}');
+
+      new Chart(dlsID, {
+        type: 'horizontalBar',
+        data: {
+          labels: dls['labels'],
+          datasets: [
+            {
+              label: "Average likes",
+              backgroundColor: dls['colors'],
+              data: dls['likes']
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Driver Average Twitter Likes',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+
+      new Chart(dfsID, {
+        type: 'horizontalBar',
+        data: {
+          labels: dfs['labels'],
+          datasets: [
+            {
+              label: "Total followers",
+              backgroundColor: dfs['colors'],
+              data: dfs['followers']
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Driver Total Twitter Followers',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+
+
+      new Chart(dpsID, {
+        type: 'bar',
+        data: {
+          labels: dps['labels'],
+          datasets: [
+            {
+              label: "Total points",
+              backgroundColor: dps['colors'],
+              data: dps['points']
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Driver Total Points',
+            fontSize: 20,
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+
+      
+      new Chart(dpslID, {
+        type: 'line',
+        data: {
+          labels: dpsl['labels'],
+          datasets: dpsl['datasets']
+        },
+        options: {
+          legend: false,
+          title: {
+            display: true,
+            text: 'Driver Race Scores',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
+          elements: {
+              line: {
+                  tension: 0
+              }
+          },
+          layout: {
+            padding: {
+              right: 100
+            }
+          },
+          plugins: {
+            datalabels: {
+              align: 'right',
+              anchor: 'center',
+              color: function(context) {
+                return context.dataset.borderColor;
+              },
+              display: function(context) {
+                return context.dataIndex === dpsl['labels'].length - 1;
+              },
+              formatter: function(value, context) {
+                return '\u25cf ' + context.dataset.label;
+              }
+            }
+          }
+        }
+      });
+    })
+
+  </script>
+
+{% endblock scripts %}

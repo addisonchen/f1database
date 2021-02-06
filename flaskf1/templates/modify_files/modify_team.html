@@ -1,0 +1,94 @@
+{% extends "modify_files/modify_data.html" %}
+
+{% block links %}
+
+
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('modify_season_page') }}">Season</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('modify_race_page') }}">Race</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('modify_result_page') }}">Result</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" href="{{ url_for('modify_team_page') }}">Team</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('modify_driver_page') }}">Driver</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('modify_principal_page') }}">Principal</a>
+</li>
+
+{% endblock links %}
+
+
+{% block form %}
+  <div class="form-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Modify a team</legend>
+        <div class="form-group">
+          <label>{{ form.team.label() }}</label>
+          {{ form.team(class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label>{{ form.name.label() }}</label>
+          {% if form.name.errors %}
+            {{ form.name(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.name.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.name(class="form-control") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label>{{ form.color.label() }}</label>
+          {% if form.color.errors %}
+            {{ form.color(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.color.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.color(class="form-control") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label>{{ form.username.label() }}</label>
+          {% if form.username.errors %}
+            {{ form.username(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.username(class="form-control") }}
+            <small class="form-text text-muted">
+              Can be left blank
+            </small>
+          {% endif %}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {% if form.team.choices|length == 0 %}
+          {{ form.submit(class="btn btn-outline-info disabled") }}
+          <small class="form-text text-muted">
+            There are no teams to change
+          </small>
+        {% else %}
+          {{ form.submit(class="btn btn-outline-info") }}
+        {% endif %}
+      </div>
+    </form>
+
+  </div>
+{% endblock form%}

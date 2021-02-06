@@ -1,0 +1,42 @@
+{% extends "add_files/add_data.html" %}
+
+{% block links %}
+
+  <li class="nav-item">
+    <a class="nav-link active" href="{{ url_for('add_season_page') }}">Season</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_race_page') }}">Race</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_result_page') }}">Result</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_team_page') }}">Team</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_driver_page') }}">Driver</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_principal_page') }}">Principal</a>
+  </li>
+
+{% endblock links %}
+
+{% block form %}
+  <div class="form-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Add a season</legend>
+        <div class="form-group">
+          <label>{{ form.season.label() }}</label>
+          {{ form.season(class="form-control") }}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+    </form>
+  </div>
+{% endblock form%}

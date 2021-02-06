@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="row" id="home_top_row">
+    <div class="home-login-container">
+      <div class="card text-center">
+        <div class="card-body" style="max-width: 450px;">
+          <h5 class="card-title">Connect to the database</h5>
+          <p class="card-text">
+            Login as a user or connect to a local database.</p>
+          <a href="{{ url_for('login_page') }}" class="btn btn-outline-primary">Connect</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="third-card-container">
+        <div class="card">
+          <a class="cardImageLink" href="{{ url_for('teams_page') }}">
+            <img src="{{ url_for('static', filename='teams_card_pic.jpg') }}" class="card-img-top" alt="Picture of formula one cars">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">Teams</h5>
+            <p class="card-text">Analyze twitter information and race results for teams.</p>
+            <a href="{{ url_for('teams_page') }}" class="btn btn-primary">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="third-card-container">
+        <div class="card">
+          <a class="cardImageLink" href="{{ url_for('drivers_page') }}">
+            <img src="{{ url_for('static', filename='drivers_card_pic.jpg') }}" class="card-img-top" alt="Picture of formula one drivers">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">Drivers</h5>
+            <p class="card-text">Graph twitter information and race results for drivers.</p>
+            <a href="{{ url_for('drivers_page') }}" class="btn btn-primary">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="third-card-container">
+        <div class="card">
+          <a class="cardImageLink" href="{{ url_for('season_raw_data_page') }}">
+            <img src="{{ url_for('static', filename='principals_card_pic.jpg') }}" class="card-img-top" alt="Picture of formula one principals">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">Raw Data</h5>
+            <p class="card-text">View the data tables of the connected database.</p>
+            <a href="{{ url_for('season_raw_data_page') }}" class="btn btn-primary">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="home-download-container">
+      <div class="card" style="max-width: 550px">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <div class="card-img-left">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Sample database</h5>
+              <p class="card-text">Download a database with the necessary tables, sample data, procedures, and functions.</p>
+              <a href="{{ url_for('static', filename='schemamaker.sql') }}" class="btn btn-outline-primary" download>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="spacer">
+
+    </div>
+  </div>
+
+{% endblock content %}

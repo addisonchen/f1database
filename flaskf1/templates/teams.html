@@ -1,0 +1,185 @@
+{% extends "table_layout.html" %}
+{% block nav %}
+  {% for row in tuples %}
+    <a class="nav-link" href="{{ url_for('teams_info_page', team=row['pk'] ) }}">{{ row['name'] }}</a>
+  {% endfor %}
+{% endblock nav %}
+
+{% block subcontent %}
+  <div class="table-heading">Teams</div>
+
+  <canvas id="teamtpsl" width="600" height="400"></canvas>
+
+  <div class="half-spacer"></div>
+
+  <canvas id="teamtps" width="600" height="400"></canvas>
+
+  <div class="half-spacer"></div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <canvas id="teamfs" width="300" height="300"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="teamls" width="300" height="300"></canvas>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+{% endblock subcontent %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      var tpsID = document.getElementById("teamtps").getContext("2d");
+      var tps = JSON.parse('{{ tpsdata|tojson }}');
+
+      var tpslID = document.getElementById("teamtpsl").getContext("2d");
+      var tpsl = JSON.parse('{{ tpsldata|tojson }}');
+
+      var tfsID = document.getElementById("teamfs").getContext("2d");
+      var tfs = JSON.parse('{{ tfsdata|tojson }}');
+
+      var tlsID = document.getElementById("teamls").getContext("2d");
+      var tls = JSON.parse('{{ tlsdata|tojson }}');
+
+      new Chart(tlsID, {
+        type: 'bar',
+        data: {
+          labels: tls['labels'],
+          datasets: [
+            {
+              label: "Average likes",
+              backgroundColor: tls['colors'],
+              data: tls['likes']
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Team Average Twitter Likes',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+
+      new Chart(tfsID, {
+        type: 'bar',
+        data: {
+          labels: tfs['labels'],
+          datasets: [
+            {
+              label: "Total followers",
+              backgroundColor: tfs['colors'],
+              data: tfs['followers']
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Team Total Twitter Followers',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+
+      new Chart(tpsID, {
+        type: 'horizontalBar',
+        data: {
+          labels: tps['labels'],
+          datasets: [
+            {
+              label: "Total points",
+              backgroundColor: tps['colors'],
+              data: tps['points']
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Team Total Points',
+            fontSize: 20,
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+      
+      new Chart(tpslID, {
+        type: 'line',
+        data: {
+          labels: tpsl['labels'],
+          datasets: tpsl['datasets']
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Team Race Scores',
+            fontSize: 20,
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
+          elements: {
+              line: {
+                  tension: 0
+              }
+          },
+          plugins: {
+              datalabels: {
+                  display: false,
+              },
+          }
+        }
+      });
+    })
+
+
+  </script>
+
+{% endblock scripts %}
