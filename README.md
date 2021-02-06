@@ -1,3 +1,5 @@
+visit @ addison-chen.com/f1database
+
 The front end of the project is a Flask web application. The back end is a MySQL database. The project uses python 3.7.1 and Flask version 1.1.1. In addition to flask, the web application uses the libraries pymysql, random, flask_wtf, and wtforms. 
 “pip install flask-wtf” will install both the flask_wtf and wtforms libraries. 
 “pip install flask” will install the flask library.
